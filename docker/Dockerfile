@@ -51,9 +51,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libboost-program-options1.74.0 libboost-regex1.74.0 \
         libboost-date-time1.74.0 libboost-chrono1.74.0 libboost-filesystem1.74.0 \
         libboost-iostreams1.74.0 libboost-system1.74.0 libboost-thread1.74.0 \
-        wget \
+        wget curl \
         expat liblua5.4-0 && \
-    rm -rf /var/lib/apt/lists/* && \
+    #rm -rf /var/lib/apt/lists/* && \
 # add /usr/local/lib to ldconfig to allow loading libraries from there
     ldconfig /usr/local/lib
 
@@ -62,6 +62,12 @@ RUN /usr/local/bin/osrm-extract --help && \
     /usr/local/bin/osrm-contract --help && \
     /usr/local/bin/osrm-partition --help && \
     /usr/local/bin/osrm-customize --help
+
+# Set the entrypoint
+COPY docker/entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
 
 WORKDIR /opt
 
