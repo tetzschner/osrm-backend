@@ -44,6 +44,12 @@ RUN NPROC=${BUILD_CONCURRENCY:-$(nproc)} && \
 # Only the content below ends up in the image, this helps remove /src from the image (which is large)
 FROM debian:bullseye-slim as runstage
 
+LABEL \
+  maintainer="Ole Tetzschner <ole.tetzschner@gmail.com>"
+
+ENV OSRM_VERSION 5.27.1
+
+
 COPY --from=builder /usr/local /usr/local
 COPY --from=builder /opt /opt
 
@@ -72,3 +78,5 @@ ENTRYPOINT ["/entrypoint.sh"]
 WORKDIR /opt
 
 EXPOSE 5000
+
+HEALTHCHECK --interval=60s --timeout=1s --start-period=300s --retries=3 CMD curl --fail 'http://127.0.0.1:5000/route/v1/driving/0.0,0.0;0.0,0.0?steps=false' || exit 1
