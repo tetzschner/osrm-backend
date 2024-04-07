@@ -2,10 +2,14 @@ version: "3.1"
 
 services:
   osrm-backend:
-    image: osrm-backend:latest
+    image: tetzschner/osrm-backend:latest
     ports:
       - 127.0.0.1:5000:15000
     volumes:
       - osrm-data:/osrm-data
     environment:
       OSRM_PBF_URL: 'https://download.geofabrik.de/europe/andorra-latest.osm.pbf'
+      IS_UPDATEING: 'true'
+
+#volumes:
+#  osrm-data:

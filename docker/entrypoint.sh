@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OSRM_PBF_URL=${OSRM_PBF_URL:=""}
-IS_UPDATEING=${IS_UPDATEING:=true}
+IS_UPDATEING=${IS_UPDATEING:=false}
 
 mkdir -p /osrm-data
 touch /osrm-data/data.osrm.starting.timestamp
