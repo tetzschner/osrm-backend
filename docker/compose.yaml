@@ -9,7 +9,7 @@ services:
       - osrm-data:/osrm-data
     environment:
       OSRM_PBF_URL: 'https://download.geofabrik.de/europe/andorra-latest.osm.pbf'
-      IS_UPDATEING: 'true'
+      OSRM_UPDATE_DATA_TAG: '1'
 
 #volumes:
-#  osrm-data:
+  osrm-data:
