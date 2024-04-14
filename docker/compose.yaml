@@ -13,8 +13,8 @@ services:
       replicas: 2
     environment:
       REPLICA_NUMBER: "{{.Task.Slot}}"
-      OSRM_PBF_URL: 'https://download.geofabrik.de/europe/andorra-latest.osm.pbf'
-      OSRM_UPDATE_DATA_TAG: '2024-04-14 18:00'
+      OSRM_PBF_URL: 'https://download.geofabrik.de/europe/denmark-latest.osm.pbf'
+      OSRM_UPDATE_DATA_TAG: '2024-04-14 20:20'
 
 networks:
   frontend:
