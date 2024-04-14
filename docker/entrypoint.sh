@@ -2,6 +2,8 @@
 
 OSRM_PBF_URL=${OSRM_PBF_URL:=""}
 OSRM_UPDATE_DATA_TAG=${OSRM_UPDATE_DATA_TAG:=OSRM_UPDATE_DATA_TAG}
+REPLICA_NUMBER=${REPLICA_NUMBER:=1}
+OSRM_PATH=/osrm-data/${REPLICA_NUMBER}
 
 mkdir -p /osrm-data
 touch /osrm-data/data.osrm.starting.timestamp
@@ -9,7 +11,10 @@ touch /osrm-data/data.osrm.starting.timestamp
 touch /osrm-data/data.osrm.updated.tag
 export OSRM_UPDATED_DATA_TAG=$(</osrm-data/data.osrm.updated.tag)
 
+echo "if ${OSRM_UPDATE_DATA_TAG} != ${OSRM_UPDATED_DATA_TAG}"
+
 if [ "$OSRM_UPDATE_DATA_TAG" != "$OSRM_UPDATED_DATA_TAG" ]; then
+    echo "Updating OSRM Data now..."
     rm /osrm-data/* \
         && curl -L --insecure $OSRM_PBF_URL --create-dirs -o /osrm-data/data.osm.pbf \
         && osrm-extract -p /opt/car.lua /osrm-data/data.osm.pbf \
@@ -24,4 +29,5 @@ if [ "$OSRM_UPDATE_DATA_TAG" != "$OSRM_UPDATED_DATA_TAG" ]; then
 fi
 
 touch /osrm-data/data.osrm.starting2.timestamp
+echo "Starting OSRM now..."
 osrm-routed --algorithm mld /osrm-data/data.osrm

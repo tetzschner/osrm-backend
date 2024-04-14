@@ -7,9 +7,18 @@ services:
       - 127.0.0.1:5000:15000
     volumes:
       - osrm-data:/osrm-data
+    networks:
+      - frontend
+    deploy:
+      replicas: 2
     environment:
+      REPLICA_NUMBER: "{{.Task.Slot}}"
       OSRM_PBF_URL: 'https://download.geofabrik.de/europe/andorra-latest.osm.pbf'
-      OSRM_UPDATE_DATA_TAG: '1'
+      OSRM_UPDATE_DATA_TAG: '2024-04-14 18:00'
 
-#volumes:
+networks:
+  frontend:
+
+
+volumes:
   osrm-data:
